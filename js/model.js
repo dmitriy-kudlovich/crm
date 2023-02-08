@@ -1,23 +1,17 @@
 export default class Model {
   constructor() {
-    this.users = [];
-    this.getFromLocalStorage();
+    this.users = this.getFromLocalStorage();
   }
 
   addItem(data) {
     let newUser = {
       date: this.getDate(),
       id: this.generateID(),
-      userName: data.name,
-      tel: data.tel,
-      email: data.email,
-      product: data.product,
+      ...data,
       status: "new",
     };
-
     this.users.push(newUser);
     this.setToLocalStorage(this.users);
-    this.generateID();
   }
 
   setToLocalStorage(data) {
@@ -28,7 +22,9 @@ export default class Model {
     let item = localStorage.getItem("request");
 
     if (item) {
-      this.users = JSON.parse(item);
+      return JSON.parse(item);
+    } else {
+      return [];
     }
   }
 

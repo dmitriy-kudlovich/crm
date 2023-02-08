@@ -33,7 +33,10 @@ export default class FormView {
       name: this.elements.inputName.value,
       tel: this.elements.inputPhone.value,
       email: this.elements.inputEmail.value,
-      product: this.elements.selectProduct.value,
+      product:
+        this.elements.selectProduct.options[
+          this.elements.selectProduct.selectedIndex
+        ].text,
     };
   }
 
@@ -46,10 +49,22 @@ export default class FormView {
   }
 
   validatePhone(phone) {
-    if (Number(phone)) {
-      return true;
-    } else {
-      return false;
+    let arr = phone.split("");
+    
+    if (arr[0] == "+" || Number(arr[0])) {
+      for (let i = 1; i < arr.length; i++) {
+        if (!Number(arr[i])) {
+          return false;
+        }
+      }
     }
+
+    return true;
+  }
+
+  clearForm() {
+    this.elements.inputName.value = "";
+    this.elements.inputPhone.value = "";
+    this.elements.inputEmail.value = "";
   }
 }

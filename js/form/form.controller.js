@@ -5,11 +5,10 @@ import fillForm from "./form.test-data.js";
 const model = new Model();
 const formView = new FormView();
 
-fillForm();
+// fillForm();
 
 formView.elements.form.addEventListener("submit", (e) => {
   e.preventDefault();
-  fillForm();
 
   let data = formView.getData();
 
@@ -17,4 +16,7 @@ formView.elements.form.addEventListener("submit", (e) => {
     model.addItem(data);
   }
   console.log(model);
+
+  formView.clearForm();
+  // fillForm();
 });

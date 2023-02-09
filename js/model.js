@@ -1,17 +1,26 @@
 export default class Model {
   constructor() {
-    this.users = this.getFromLocalStorage();
+    this.crmData = {
+      products: {
+        "course-html": "Курс по верстке",
+        "course-js": "Курс по JavaScript",
+        "course-vue": "Курс по VUE JS",
+        "course-php": "Курс по PHP",
+        "course-wordpress": "Курс по WordPress",
+      },
+      users: this.getFromLocalStorage(),
+    };
   }
 
   addItem(data) {
     let newUser = {
-      date: this.getDate(),
+      date: new Date().toLocaleDateString(),
       id: this.generateID(),
       ...data,
       status: "new",
     };
-    this.users.push(newUser);
-    this.setToLocalStorage(this.users);
+    this.crmData.users.push(newUser);
+    this.setToLocalStorage(this.crmData.users);
   }
 
   setToLocalStorage(data) {
@@ -29,7 +38,7 @@ export default class Model {
   }
 
   generateID() {
-    let ids = this.users.map((elem) => {
+    let ids = this.crmData.users.map((elem) => {
       return elem.id;
     });
 
@@ -38,19 +47,5 @@ export default class Model {
     }
 
     return ids[ids.length - 1] + 1;
-  }
-
-  getDate() {
-    let date = new Date();
-    let day =
-      String(date.getDate()).length < 2
-        ? "0" + String(date.getDate())
-        : String(date.getDate());
-    let month =
-      String(date.getMonth()).length < 2
-        ? "0" + String(date.getMonth())
-        : String(date.getMonth());
-
-    return `${day}.${month}.${date.getFullYear()}`;
   }
 }

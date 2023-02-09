@@ -5,7 +5,7 @@ import fillForm from "./form.test-data.js";
 const model = new Model();
 const formView = new FormView();
 
-// fillForm();
+fillForm();
 
 formView.elements.form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -18,5 +18,5 @@ formView.elements.form.addEventListener("submit", (e) => {
   console.log(model);
 
   formView.clearForm();
-  // fillForm();
+  fillForm();
 });

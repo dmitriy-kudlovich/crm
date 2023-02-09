@@ -1,22 +1,23 @@
 export default class TableView {
-  constructor(...data) {
-    this.addItem(...data);
+  constructor(data) {
+    this.addItem(data);
   }
 
   elements = {
     tbody: document.querySelector("#tbody"),
   };
 
-  addItem(...data) {
-    let users = [...data];
+  addItem(data) {
+    let users = data.users;
+    
     if (users.length > 0) {
       for (let i = 0; i < users.length; i++) {
         this.elements.tbody.insertAdjacentHTML(
           "beforeend",
           `<tr>
-          <th scope="row">${data[i].id}</th>
+          <th scope="row">${users[i].id}</th>
           <td>${users[i].date}</td>
-          <td>${users[i].product}</td>
+          <td>${data.products[users[i].product]}</td>
           <td>${users[i].name}</td>
           <td>${users[i].email}</td>
           <td>${users[i].tel}</td>

@@ -14,9 +14,9 @@ formView.elements.form.addEventListener("submit", (e) => {
 
   if (data) {
     model.addItem(data);
+    formView.clearForm();
   }
   console.log(model);
 
-  formView.clearForm();
   fillForm();
 });

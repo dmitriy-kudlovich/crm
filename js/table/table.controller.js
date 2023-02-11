@@ -4,8 +4,18 @@ import TableView from "./table.view.js";
 const model = new Model();
 const tableView = new TableView(model.crmData);
 
-// tableView.elements.tbody.addEventListener("click", (e) => {
-//   if (e.target.classList.contains("badge")) {
-//     console.log(e.target);
-//   }
-// });
+// Если не вызывать эти два метода в начале, то после смены курса в редакторе заявок позиция не отфильтруется по установленному фильтру
+model.changeVisibility(
+  model.crmData.users,
+  tableView.elements.productSelect.value
+);
+tableView.productFilter(model.crmData);
+/*------------------------------------------ */
+
+tableView.elements.productSelect.addEventListener("change", () => {
+  model.changeVisibility(
+    model.crmData.users,
+    tableView.elements.productSelect.value
+  );
+  tableView.productFilter(model.crmData);
+});

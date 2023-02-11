@@ -54,8 +54,10 @@ export default class FormView {
           return false;
         }
       }
+    } else {
+      return false;
     }
-
+    
     return true;
   }
 

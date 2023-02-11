@@ -1,9 +1,13 @@
 export default class TableView {
   constructor(data) {
     this.addItem(data);
+    this.elements.productSelect.value = data.productFilter;
   }
 
   elements = {
+    productSelect: document.querySelector("#productSelect"),
+    topStatusBar: document.querySelector("#topStatusBar"),
+    sideStatusBar: document.querySelector("#sideStatusBar"),
     tbody: document.querySelector("#tbody"),
   };
 
@@ -13,31 +17,44 @@ export default class TableView {
     complete: ["success", "Завершена"],
   };
 
+  productFilter(data) {
+    let tableRows = document.querySelectorAll("#tbody tr");
+    tableRows.forEach((elem) => {
+      elem.classList.remove("none");
+    });
+
+    data.users.forEach((elem, index) => {
+      if (elem.visibility == "invisible") {
+        tableRows[index].classList.add("none");
+      }
+    });
+  }
+
   addItem(data) {
     let users = data.users;
 
     if (users.length > 0) {
-      for (let i = 0; i < users.length; i++) {
+      users.forEach((elem) => {
         this.elements.tbody.insertAdjacentHTML(
           "beforeend",
           `<tr>
-          <th scope="row">${users[i].id}</th>
-          <td>${users[i].date}</td>
-          <td>${data.products[users[i].product]}</td>
-          <td>${users[i].name}</td>
-          <td>${users[i].email}</td>
-          <td>${users[i].phone}</td>
+          <th scope="row">${elem.id}</th>
+          <td>${elem.date}</td>
+          <td>${data.products[elem.product]}</td>
+          <td>${elem.name}</td>
+          <td>${elem.email}</td>
+          <td>${elem.phone}</td>
           <td>
             <div class="badge badge-pill badge-${
-              this.statusBadges[users[i].status][0]
-            }">${this.statusBadges[users[i].status][1]}</div>
+              this.statusBadges[elem.status][0]
+            }">${this.statusBadges[elem.status][1]}</div>
           </td>
           <td>
-            <a href='edit.html?id=${users[i].id}'>Редактировать</a>
+            <a href='edit.html?id=${elem.id}'>Редактировать</a>
           </td>
         </tr>`
         );
-      }
+      });
     }
   }
 }

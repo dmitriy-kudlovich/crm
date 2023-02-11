@@ -8,6 +8,7 @@ export default class Model {
         "course-php": "Курс по PHP",
         "course-wordpress": "Курс по WordPress",
       },
+      productFilter: this.getFilterFromLocalStorage(),
       users: this.getFromLocalStorage(),
     };
   }
@@ -18,6 +19,7 @@ export default class Model {
       id: this.generateID(),
       ...data,
       status: "new",
+      visibility: "visible",
     };
     this.crmData.users.push(newUser);
     this.setToLocalStorage(this.crmData.users);
@@ -36,6 +38,10 @@ export default class Model {
     localStorage.setItem("request", JSON.stringify(data));
   }
 
+  setFilterToLocalStorage(data) {
+    localStorage.setItem("filter", JSON.stringify(data));
+  }
+
   getFromLocalStorage() {
     let item = localStorage.getItem("request");
 
@@ -43,6 +49,15 @@ export default class Model {
       return JSON.parse(item);
     } else {
       return [];
+    }
+  }
+
+  getFilterFromLocalStorage() {
+    let item = localStorage.getItem("filter");
+    if (item) {
+      return JSON.parse(item);
+    } else {
+      return "all";
     }
   }
 
@@ -63,7 +78,7 @@ export default class Model {
     let index = currentData.findIndex((elem) => {
       return elem.id == id;
     });
-    console.log(index);
+
     currentData[index].product = data.product;
     currentData[index].name = data.name;
     currentData[index].email = data.email;
@@ -71,5 +86,19 @@ export default class Model {
     currentData[index].status = data.status;
 
     this.setToLocalStorage(currentData);
+  }
+
+  changeVisibility(data, product) {
+    data.forEach((elem) => {
+      elem.visibility = "visible";
+      if (product == "all") {
+        elem.visibility = "visible";
+      } else if (elem.product != product) {
+        elem.visibility = "invisible";
+      }
+    });
+    this.setToLocalStorage(data);
+
+    this.setFilterToLocalStorage(product);
   }
 }

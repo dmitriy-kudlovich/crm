@@ -8,9 +8,12 @@ editView.elements.btnSave.addEventListener("click", (e) => {
   e.preventDefault();
 
   let formData = editView.getFormData();
-  console.log(formData);
   let id = editView.getUrlParam();
-  model.changeData(id, formData);
+
+  if (formData && confirm("Save changes?")) {
+    model.changeData(id, formData);
+    window.location.replace("./table.html");
+  }
 });
 
 editView.elements.btnRemove.addEventListener("click", (e) => {
@@ -20,5 +23,7 @@ editView.elements.btnRemove.addEventListener("click", (e) => {
 
   if (confirm("Remove this request?")) {
     model.removeItem(id);
+    window.location.replace("./table.html");
   }
 });
+

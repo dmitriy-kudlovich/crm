@@ -1,6 +1,5 @@
 export default class EditView {
   constructor(data) {
-    console.log(data);
     this.fillForm(data);
   }
 
@@ -36,6 +35,25 @@ export default class EditView {
   }
 
   getFormData() {
+    if (
+      this.elements.name.value == "" ||
+      this.elements.phone.value == "" ||
+      this.elements.email.value == ""
+    ) {
+      alert("Please, fill the form");
+      return false;
+    }
+
+    if (!this.validatePhone(this.elements.phone.value)) {
+      alert("Please, enter correct phone number");
+      return false;
+    }
+
+    if (!this.validateEmail(this.elements.email.value)) {
+      alert("Please, enter correct email");
+      return false;
+    }
+
     return {
       product: this.elements.product.value,
       name: this.elements.name.value,
@@ -43,5 +61,30 @@ export default class EditView {
       phone: this.elements.phone.value,
       status: this.elements.status.value,
     };
+  }
+
+  validateEmail(email) {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  }
+
+  validatePhone(phone) {
+    let arr = phone.split("");
+
+    if (arr[0] == "+" || Number(arr[0])) {
+      for (let i = 1; i < arr.length; i++) {
+        if (!Number(arr[i])) {
+          console.log(arr[i]);
+          return false;
+        }
+      }
+    } else {
+      return false;
+    }
+
+    return true;
   }
 }

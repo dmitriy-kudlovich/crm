@@ -88,7 +88,6 @@
                       <input
                         type="text"
                         class="form-control"
-                        value="Петр Сергеевич"
                         id="name"
                         name="name"
                       />
@@ -101,9 +100,8 @@
                     </div>
                     <div class="col">
                       <input
-                        type="text"
+                        type="email"
                         class="form-control"
-                        value="info@inbox.ru"
                         id="email"
                         name="email"
                       />
@@ -116,9 +114,8 @@
                     </div>
                     <div class="col">
                       <input
-                        type="text"
+                        type="tel"
                         class="form-control"
-                        value="+7 (903) 555-77-55"
                         id="phone"
                         name="phone"
                       />
@@ -131,7 +128,7 @@
                     </div>
                     <div class="col">
                       <select class="custom-select" id="status" name="status">
-                        <option selected="">Выберите...</option>
+                        <!-- <option selected="">Выберите...</option> -->
                         <option value="new">Новая</option>
                         <option value="inwork">В работе</option>
                         <option value="complete">Завершена</option>
@@ -142,9 +139,15 @@
               </div>
               <!-- //card -->
               <div class="row justify-content-between">
-                <div class="col text-right">
-                  <button type="submit" class="btn btn-primary">
+                <div class="col text-left">
+                  <button id="btnSave" type="submit" class="btn btn-primary">
                     Сохранить изменения
+                  </button>
+                </div>
+
+                <div class="col text-right">
+                  <button id="btnRemove" type="submit" class="btn btn-secondary">
+                    Удалить
                   </button>
                 </div>
               </div>

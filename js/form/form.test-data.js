@@ -2,9 +2,9 @@ import FormView from "./form.view.js";
 
 const view = new FormView();
 
-function SetRandomData(name, tel, email, product) {
+function SetRandomData(name, phone, email, product) {
   this.name = name;
-  this.tel = tel;
+  this.phone = phone;
   this.email = email;
   this.product = product;
 }
@@ -54,7 +54,7 @@ export default function fillForm() {
   let data = getRandomData();
 
   view.elements.inputName.value = data.name;
-  view.elements.inputPhone.value = data.tel;
+  view.elements.inputPhone.value = data.phone;
   view.elements.inputEmail.value = data.email;
   view.elements.selectProduct.value = data.product;
 }

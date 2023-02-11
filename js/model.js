@@ -23,6 +23,15 @@ export default class Model {
     this.setToLocalStorage(this.crmData.users);
   }
 
+  removeItem(id) {
+    let currentData = this.getFromLocalStorage();
+    let index = currentData.findIndex((elem) => {
+      return elem.id == id;
+    });
+    this.crmData.users.splice(index, 1);
+    this.setToLocalStorage(this.crmData.users);
+  }
+
   setToLocalStorage(data) {
     localStorage.setItem("request", JSON.stringify(data));
   }
@@ -47,5 +56,20 @@ export default class Model {
     }
 
     return ids[ids.length - 1] + 1;
+  }
+
+  changeData(id, data) {
+    let currentData = this.getFromLocalStorage();
+    let index = currentData.findIndex((elem) => {
+      return elem.id == id;
+    });
+    console.log(index);
+    currentData[index].product = data.product;
+    currentData[index].name = data.name;
+    currentData[index].email = data.email;
+    currentData[index].phone = data.phone;
+    currentData[index].status = data.status;
+
+    this.setToLocalStorage(currentData);
   }
 }

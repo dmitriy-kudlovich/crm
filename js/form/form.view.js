@@ -31,7 +31,7 @@ export default class FormView {
 
     return {
       name: this.elements.inputName.value,
-      tel: this.elements.inputPhone.value,
+      phone: this.elements.inputPhone.value,
       email: this.elements.inputEmail.value,
       product: this.elements.selectProduct.value,
     };

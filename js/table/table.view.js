@@ -2,6 +2,10 @@ export default class TableView {
   constructor(data) {
     this.addItem(data);
     this.elements.productSelect.value = data.productFilter;
+    this.setActiveStatus(
+      sideStatusBar.querySelector(`a[data-value='${data.statusFilter}']`)
+    );
+    this.getNewRequestsAmount(data);
   }
 
   elements = {
@@ -9,6 +13,7 @@ export default class TableView {
     topStatusBar: document.querySelector("#topStatusBar"),
     sideStatusBar: document.querySelector("#sideStatusBar"),
     tbody: document.querySelector("#tbody"),
+    newRequestsBadge: document.querySelector("#badge-new"),
   };
 
   statusBadges = {
@@ -16,6 +21,32 @@ export default class TableView {
     inwork: ["warning", "В работе"],
     complete: ["success", "Завершена"],
   };
+
+  getNewRequestsAmount(data) {
+    let newRequests = data.users.filter((elem) => {
+      if (elem.status == "new") return true;
+    });
+    this.elements.newRequestsBadge.textContent = newRequests.length;
+
+    if (newRequests.length == 0) {
+      this.elements.newRequestsBadge.classList.add("none");
+    } else {
+      this.elements.newRequestsBadge.classList.remove("none");
+    }
+  }
+
+  setActiveStatus(item) {
+    let sideStatusBarItems = sideStatusBar.querySelectorAll("a");
+
+    sideStatusBarItems.forEach((elem) => {
+      elem.classList.remove("active");
+    });
+    item.classList.add("active");
+  }
+
+  getActiveStatus() {
+    return sideStatusBar.querySelector(".active").dataset.value;
+  }
 
   productFilter(data) {
     let tableRows = document.querySelectorAll("#tbody tr");

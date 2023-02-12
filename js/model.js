@@ -9,6 +9,7 @@ export default class Model {
         "course-wordpress": "Курс по WordPress",
       },
       productFilter: this.getFilterFromLocalStorage(),
+      statusFilter: this.getStatusFilterFromLocalStorage(),
       users: this.getFromLocalStorage(),
     };
   }
@@ -38,10 +39,6 @@ export default class Model {
     localStorage.setItem("request", JSON.stringify(data));
   }
 
-  setFilterToLocalStorage(data) {
-    localStorage.setItem("filter", JSON.stringify(data));
-  }
-
   getFromLocalStorage() {
     let item = localStorage.getItem("request");
 
@@ -52,8 +49,25 @@ export default class Model {
     }
   }
 
+  setFilterToLocalStorage(data) {
+    localStorage.setItem("filter", JSON.stringify(data));
+  }
+
   getFilterFromLocalStorage() {
     let item = localStorage.getItem("filter");
+    if (item) {
+      return JSON.parse(item);
+    } else {
+      return "all";
+    }
+  }
+
+  setStatusFilterToLocalStorage(data) {
+    localStorage.setItem("filterStatus", JSON.stringify(data));
+  }
+
+  getStatusFilterFromLocalStorage() {
+    let item = localStorage.getItem("filterStatus");
     if (item) {
       return JSON.parse(item);
     } else {
@@ -88,17 +102,29 @@ export default class Model {
     this.setToLocalStorage(currentData);
   }
 
-  changeVisibility(data, product) {
+  changeVisibility(data, product, status) {
     data.forEach((elem) => {
       elem.visibility = "visible";
-      if (product == "all") {
+
+      if (product == "all" && status == "all") {
         elem.visibility = "visible";
-      } else if (elem.product != product) {
-        elem.visibility = "invisible";
+      } else if (product == "all" && status != "all") {
+        if (elem.status != status) {
+          elem.visibility = "invisible";
+        }
+      } else if (status == "all" && product != "all") {
+        if (elem.product != product) {
+          elem.visibility = "invisible";
+        }
+      } else if (status != "all" && product != "all") {
+        if (elem.product != product || elem.status != status) {
+          elem.visibility = "invisible";
+        }
       }
     });
     this.setToLocalStorage(data);
 
     this.setFilterToLocalStorage(product);
+    this.setStatusFilterToLocalStorage(status);
   }
 }

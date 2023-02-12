@@ -36,3 +36,19 @@ tableView.elements.sideStatusBar.addEventListener("click", (e) => {
 
   tableView.productFilter(model.crmData);
 });
+
+tableView.elements.topStatusBar.addEventListener("click", (e) => {
+  let sideStatusBar = tableView.elements.sideStatusBar;
+
+  tableView.setActiveStatus(
+    sideStatusBar.querySelector(`a[data-value='${e.target.dataset.value}']`)
+  );
+
+  model.changeVisibility(
+    model.crmData.users,
+    tableView.elements.productSelect.value,
+    tableView.getActiveStatus()
+  );
+
+  tableView.productFilter(model.crmData);
+});
